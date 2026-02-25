@@ -1,0 +1,46 @@
+using AimTrainer.Rendering;
+
+using Silk.NET.Maths;
+using Silk.NET.Windowing;
+
+namespace AimTrainer.Core
+{
+    public class Game
+    {
+        private IWindow _window;
+        private GLContext _glContext = null!;
+        private Mesh _traingle = null!;
+        private Shader _shader = null!;
+
+        public Game()
+        {
+            var options = WindowOptions.Default;
+            options.Size = new Vector2D<int>(1280, 720);
+            options.Title = "AimTrainer";
+
+            _window = Window.Create(options);
+
+            _window.Load += OnLoad;
+            _window.Render += OnRender;
+        }
+
+        public void Run() => _window.Run();
+
+        private void OnLoad()
+        {
+            _glContext = new GLContext(_window);
+
+            _shader = new Shader(_glContext.GL);
+
+            _traingle = Mesh.CreateTriangle(_glContext.GL);
+        }
+
+        private void OnRender(double delta)
+        {
+            _glContext.Clear();
+
+            _shader.Use();
+            _traingle.Draw();
+        }
+    }
+}
