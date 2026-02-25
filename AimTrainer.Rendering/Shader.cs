@@ -1,3 +1,5 @@
+using System.Numerics;
+
 using Silk.NET.OpenGL;
 
 namespace AimTrainer.Rendering
@@ -35,6 +37,16 @@ namespace AimTrainer.Rendering
             _gl.CompileShader(shader);
 
             return shader;
+        }
+
+        public void SetMatrix4(string name, Matrix4x4 matrix)
+        {
+            int location = _gl.GetUniformLocation(_program, name);
+
+            unsafe
+            {
+                _gl.UniformMatrix4(location, 1, false, (float*)&matrix);
+            }
         }
 
         public void Use() => _gl.UseProgram(_program);

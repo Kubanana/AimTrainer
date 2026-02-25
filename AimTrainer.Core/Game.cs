@@ -1,3 +1,5 @@
+using System.Numerics;
+
 using AimTrainer.Rendering;
 
 using Silk.NET.Maths;
@@ -11,6 +13,9 @@ namespace AimTrainer.Core
         private GLContext _glContext = null!;
         private Mesh _traingle = null!;
         private Shader _shader = null!;
+
+        private Camera _camera = new Camera();
+        private Matrix4x4 _model = Matrix4x4.Identity;
 
         public Game()
         {
@@ -40,6 +45,11 @@ namespace AimTrainer.Core
             _glContext.Clear();
 
             _shader.Use();
+
+            _shader.SetMatrix4("uModel", _model);
+            _shader.SetMatrix4("uView", _camera.GetViewMatrix());
+            _shader.SetMatrix4("uProjection", _camera.GetProjectionMatrix());
+
             _traingle.Draw();
         }
     }
