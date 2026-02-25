@@ -32,7 +32,7 @@ namespace AimTrainer.Core
 
             _shader = new Shader(_glContext.GL);
 
-            _traingle = Mesh.CreateTriangle(_glContext.GL);
+            _traingle = Mesh.CreateCube(_glContext.GL, 1f);
         }
 
         private void OnRender(double delta)

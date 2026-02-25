@@ -50,5 +50,39 @@ namespace AimTrainer.Rendering
 
             return new Mesh(gl, verts);
         }
+
+        public static Mesh CreateCube(GL gl, float size = 1f)
+        {
+            float s = size / 2f;
+
+            float[] vertices =
+            {
+                //Front face
+                -s, -s, s, s, -s, s, s, s, s,
+                -s, -s, s, s, s, s, -s, s, s,
+
+                //Backface
+                -s, -s, -s, -s, s, -s, s, s, -s,
+                -s, -s, -s, s, s, -s, s, s -s,
+                
+                //Left face
+                -s, -s, -s, -s, -s, s, -s, s, s,
+                -s, -s, -s, -s, s, s, -s, s, -s,
+
+                //Right face
+                s, -s, -s, s, s, -s, s, s, s,
+                s, -s, -s, s, s, s, s, -s, s,
+
+                //Top face
+                -s, s, -s, -s, s, s, s, s, s
+                -s, s, -s, s, s, s, s, s, -s,
+
+                //Bottom face
+                -s, -s, -s, s, -s, -s, s, -s, s,
+                -s, -s, -s, s, -s, s, -s, -s, s
+            };
+
+            return new Mesh(gl, vertices);
+        }
     }
 }
