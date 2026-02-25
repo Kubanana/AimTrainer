@@ -1,46 +1,58 @@
-﻿using Silk.NET.Core;
-using Silk.NET.Core.Native;
-using Silk.NET.Vulkan;
+﻿using Silk.NET.Maths;
+using Silk.NET.OpenGL;
 using Silk.NET.Windowing;
 
 public class Program
 {
-    private static Vk? _vk;
-    private static Instance _instance;
+    private static GL? _gl;
+    private static uint _vao;
+    private static uint _vbo;
 
-    static unsafe void Main()
+    static void Main()
     {
-        var options = WindowOptions.DefaultVulkan;
-        options.Size = new Silk.NET.Maths.Vector2D<int>(1280, 720);
+        var options = WindowOptions.Default;
+        options.Size = new Vector2D<int>(1280, 720);
         options.Title = "AimTrainer";
 
         var window = Window.Create(options);
 
         window.Load += () =>
         {
-            _vk = Vk.GetApi();
+            _gl = GL.GetApi(window);
 
-            var appInfo = new ApplicationInfo();
-            appInfo.SType = StructureType.ApplicationInfo;
-            appInfo.PApplicationName = (byte*)SilkMarshal.StringToPtr("AimTrainer");
-            appInfo.ApplicationVersion = new Version32(1, 0, 0);
-            appInfo.PEngineName = (byte*)SilkMarshal.StringToPtr("");
-            appInfo.EngineVersion = new Version32(1, 0, 0);
-            appInfo.ApiVersion = Vk.Version12;
+            float[] _vertices =
+            {
+                0.0f, 0.5f, 0.0f,
+                -0.5f, -0.5f, 0.0f,
+                0.5f,  -0.5f, 0.0f
+            };
 
-            var createInfo = new InstanceCreateInfo();
-            createInfo.SType = StructureType.InstanceCreateInfo;
-            createInfo.PApplicationInfo = &appInfo;
+            _vao = _gl.GenVertexArray();
+            _gl.BindVertexArray(_vao);
 
-            if (_vk.CreateInstance(&createInfo, null, out _instance) != Result.Success)
-                throw new Exception("Failed to create Vulkan instance");
+            _vbo = _gl.GenBuffer();
+            _gl.BindBuffer(BufferTargetARB.ArrayBuffer, _vbo);
 
-            Console.WriteLine("Created Vulkan instance");
+            unsafe
+            {
+                fixed (float* v = _vertices)
+                {
+                    _gl.BufferData(BufferTargetARB.ArrayBuffer, 
+                        (nuint)(_vertices.Length * sizeof(float)), v, BufferUsageARB.StreamDraw);
+                }
+            }
+
+            _gl.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 3 * sizeof(float), 0);
+            _gl.EnableVertexAttribArray(0);
         };
 
         window.Render += delta =>
         {
-            
+            _gl.ClearColor(0.1f, 0.1f, 0.15f, 1.0f);
+            _gl.Clear(ClearBufferMask.ColorBufferBit);
+
+            _gl.BindVertexArray(_vao);
+            _gl.DrawArrays(PrimitiveType.Triangles, 0, 3);
         };
 
         window.Run();
