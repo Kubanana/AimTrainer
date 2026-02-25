@@ -63,7 +63,7 @@ namespace AimTrainer.Rendering
 
                 //Backface
                 -s, -s, -s, -s, s, -s, s, s, -s,
-                -s, -s, -s, s, s, -s, s, s -s,
+                -s, -s, -s, s, s, -s, s, s, -s,
                 
                 //Left face
                 -s, -s, -s, -s, -s, s, -s, s, s,
@@ -74,7 +74,7 @@ namespace AimTrainer.Rendering
                 s, -s, -s, s, s, s, s, -s, s,
 
                 //Top face
-                -s, s, -s, -s, s, s, s, s, s
+                -s, s, -s, -s, s, s, s, s, s,
                 -s, s, -s, s, s, s, s, s, -s,
 
                 //Bottom face

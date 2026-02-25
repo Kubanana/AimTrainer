@@ -16,6 +16,7 @@ namespace AimTrainer.Core
 
         private Camera _camera = new Camera();
         private Matrix4x4 _model = Matrix4x4.Identity;
+        private float _rotation = 0f;
 
         public Game()
         {
@@ -26,6 +27,7 @@ namespace AimTrainer.Core
             _window = Window.Create(options);
 
             _window.Load += OnLoad;
+            _window.Update += OnUpdate;
             _window.Render += OnRender;
         }
 
@@ -38,6 +40,13 @@ namespace AimTrainer.Core
             _shader = new Shader(_glContext.GL);
 
             _traingle = Mesh.CreateCube(_glContext.GL, 1f);
+        }
+
+        private void OnUpdate(double delta)
+        {
+            _rotation += (float)delta;
+
+            _model = Matrix4x4.CreateRotationY(_rotation) * Matrix4x4.CreateRotationX(_rotation / 2f);
         }
 
         private void OnRender(double delta)
