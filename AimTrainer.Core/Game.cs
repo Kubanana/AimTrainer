@@ -7,6 +7,8 @@ using Silk.NET.Input;
 using Silk.NET.Maths;
 using Silk.NET.Windowing;
 
+using SixLabors.Fonts;
+
 namespace AimTrainer.Core
 {
     public class Game
@@ -22,6 +24,8 @@ namespace AimTrainer.Core
         private IMouse _mouse = null!;
         private Vector2 _mouseDelta;
         private Crosshair _crosshair = null!;
+        
+        private AimTrainer.Rendering.TextRenderer _textRenderer;
 
         public Game()
         {
@@ -43,6 +47,13 @@ namespace AimTrainer.Core
         private void OnLoad()
         {
             _glContext = new GLContext(_window);
+
+            var collection = new FontCollection();
+            var family = collection.Add("Arial.ttf");
+            var font = family.CreateFont(32);
+
+            _textRenderer = new AimTrainer.Rendering.TextRenderer();
+            _textRenderer.Init(_glContext.GL, font);
 
             _shader = new Shader(_glContext.GL);
 
@@ -81,6 +92,8 @@ namespace AimTrainer.Core
 
             _traingle.Draw();
             _crosshair.Draw();
+
+            _textRenderer.Draw($"FPS: {200}", 10, 10, 1f);
         }
 
         private void OnResize(Vector2D<int> size)
