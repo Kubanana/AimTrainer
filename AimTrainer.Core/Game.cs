@@ -2,6 +2,7 @@ using System.Numerics;
 
 using AimTrainer.Rendering;
 
+using Silk.NET.Input;
 using Silk.NET.Maths;
 using Silk.NET.Windowing;
 
@@ -16,7 +17,9 @@ namespace AimTrainer.Core
 
         private Camera _camera = new Camera();
         private Matrix4x4 _model = Matrix4x4.Identity;
-        private float _rotation = 0f;
+        private IKeyboard _keyboard = null!;
+        private IMouse _mouse = null!;
+        private Vector2 _mouseDelta;
 
         public Game()
         {
@@ -40,13 +43,22 @@ namespace AimTrainer.Core
             _shader = new Shader(_glContext.GL);
 
             _traingle = Mesh.CreateCube(_glContext.GL, 1f);
+
+            var input = _window.CreateInput();
+            _keyboard = input.Keyboards[0];
+            _mouse = input.Mice[0];
+
+            _mouse.Cursor.CursorMode = CursorMode.Disabled;
+
+            _mouse.MouseMove += (_, delta) =>
+            {
+                _mouseDelta = delta;
+            };
         }
 
         private void OnUpdate(double delta)
         {
-            _rotation += (float)delta;
-
-            _model = Matrix4x4.CreateRotationY(_rotation) * Matrix4x4.CreateRotationX(_rotation / 2f);
+            _camera.Update((float)delta, _keyboard, _mouse);
         }
 
         private void OnRender(double delta)
