@@ -25,6 +25,9 @@ namespace AimTrainer.Rendering
             _gl = gl;
             _font = font;
 
+            _shader = new Shader(_gl, Path.Combine(AppContext.BaseDirectory, "AimTrainer.Rendering", "Shaders", "Text", "text.vert"), 
+                                      Path.Combine(AppContext.BaseDirectory, "AimTrainer.Rendering", "Shaders", "Text", "text.frag"));
+
             SetupQuad();
         }
 

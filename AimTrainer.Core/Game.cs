@@ -25,7 +25,7 @@ namespace AimTrainer.Core
         private Vector2 _mouseDelta;
         private Crosshair _crosshair = null!;
         
-        private AimTrainer.Rendering.TextRenderer _textRenderer;
+        private AimTrainer.Rendering.TextRenderer _textRenderer = null!;
 
         public Game()
         {
@@ -55,7 +55,8 @@ namespace AimTrainer.Core
             _textRenderer = new AimTrainer.Rendering.TextRenderer();
             _textRenderer.Init(_glContext.GL, font);
 
-            _shader = new Shader(_glContext.GL);
+            _shader = new Shader(_glContext.GL, Path.Combine(AppContext.BaseDirectory, "AimTrainer.Rendering", "Shaders", "Mesh", "unlit.vert"),
+                                                Path.Combine(AppContext.BaseDirectory, "AimTrainer.Rendering", "Shaders", "Mesh", "unlit.frag"));
 
             _traingle = Mesh.CreateCube(_glContext.GL, 1f);
 

@@ -9,14 +9,12 @@ namespace AimTrainer.Rendering
         private GL _gl;
         private uint _program;
 
-        public Shader(GL gl)
+        public Shader(GL gl, string vertPath, string fragPath)
         {
             this._gl = gl;
 
-            string basePath = AppContext.BaseDirectory;
-
-            string vertSrc = File.ReadAllText(Path.Combine(basePath, "AimTrainer.Rendering", "Shaders", "Mesh", "unlit.vert"));
-            string fragSrc = File.ReadAllText(Path.Combine(basePath, "AimTrainer.Rendering", "Shaders", "Mesh", "unlit.frag"));
+            string vertSrc = File.ReadAllText(vertPath);
+            string fragSrc = File.ReadAllText(fragPath);
 
             uint vert = Compile(ShaderType.VertexShader, vertSrc);
             uint frag = Compile(ShaderType.FragmentShader, fragSrc);
