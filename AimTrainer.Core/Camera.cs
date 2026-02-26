@@ -15,7 +15,7 @@ namespace AimTrainer.Core
         public float Near { get; set; } = 0.01f;
         public float Far { get; set; } = 1000f;
 
-        public float Speed = 2f;
+        public float Speed = 2.5f;
         public float Sensitivity = 0.001f;
 
         private float _yaw = -90f;
