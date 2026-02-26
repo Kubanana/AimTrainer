@@ -15,7 +15,7 @@ namespace AimTrainer.Core
         public float Near { get; set; } = 0.01f;
         public float Far { get; set; } = 1000f;
 
-        public float Speed = 3f;
+        public float Speed = 2f;
         public float Sensitivity = 0.001f;
 
         private float _yaw = -90f;
@@ -47,7 +47,7 @@ namespace AimTrainer.Core
 
             if (keyboard.IsKeyPressed(Key.D)) Position += right * Speed * delta;
 
-            Position = new Vector3(Position.X, 1.0f, Position.Z);
+            Position = new Vector3(Position.X, 0.0f, Position.Z);
 
             var currentPos = new Vector2(mouse.Position.X, mouse.Position.Y);
 
