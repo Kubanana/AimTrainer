@@ -63,7 +63,7 @@ namespace AimTrainer.Rendering
 
                 //Backface
                 -s, -s, -s, -s, s, -s, s, s, -s,
-                -s, -s, -s, s, s, -s, s, s, -s,
+                -s, -s, -s, s, s, -s, s, -s, -s,
                 
                 //Left face
                 -s, -s, -s, -s, -s, s, -s, s, s,
