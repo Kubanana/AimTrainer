@@ -36,19 +36,18 @@ namespace AimTrainer.Core
 
         public void Update(float delta, IKeyboard keyboard, IMouse mouse)
         {
-            if (keyboard.IsKeyPressed(Key.W))
-                Position += Front * Speed * delta;
-            
-            if (keyboard.IsKeyPressed(Key.S))
-                Position -= Front * Speed * delta;
-
             var right = Vector3.Normalize(Vector3.Cross(Front, Up));
+            var forward = Vector3.Normalize(new Vector3(Front.X, 0, Front.Z));
+            
+            if (keyboard.IsKeyPressed(Key.W)) Position += forward * Speed * delta;
+            
+            if (keyboard.IsKeyPressed(Key.S)) Position -= forward * Speed * delta;
 
-            if (keyboard.IsKeyPressed(Key.A))
-                Position -= right * Speed * delta;
+            if (keyboard.IsKeyPressed(Key.A)) Position -= right * Speed * delta;
 
-            if (keyboard.IsKeyPressed(Key.D))
-                Position += right * Speed * delta;
+            if (keyboard.IsKeyPressed(Key.D)) Position += right * Speed * delta;
+
+            Position = new Vector3(Position.X, 1.0f, Position.Z);
 
             var currentPos = new Vector2(mouse.Position.X, mouse.Position.Y);
 
