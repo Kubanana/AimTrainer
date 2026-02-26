@@ -20,6 +20,7 @@ namespace AimTrainer.Core
         private IKeyboard _keyboard = null!;
         private IMouse _mouse = null!;
         private Vector2 _mouseDelta;
+        private Crosshair _crosshair = null!;
 
         public Game()
         {
@@ -54,6 +55,8 @@ namespace AimTrainer.Core
             {
                 _mouseDelta = delta;
             };
+
+            _crosshair = new Crosshair(_glContext.GL, _shader);
         }
 
         private void OnUpdate(double delta)
@@ -72,6 +75,7 @@ namespace AimTrainer.Core
             _shader.SetMatrix4("uProjection", _camera.GetProjectionMatrix());
 
             _traingle.Draw();
+            _crosshair.Draw();
         }
     }
 }
