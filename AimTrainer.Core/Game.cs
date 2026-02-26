@@ -28,6 +28,7 @@ namespace AimTrainer.Core
             var options = WindowOptions.Default;
             options.Size = new Vector2D<int>(1280, 720);
             options.Title = "AimTrainer";
+            options.WindowBorder = WindowBorder.Resizable;
 
             _window = Window.Create(options);
 
