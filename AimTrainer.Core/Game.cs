@@ -1,3 +1,4 @@
+using System.Drawing;
 using System.Numerics;
 
 using AimTrainer.Rendering;
@@ -33,6 +34,7 @@ namespace AimTrainer.Core
             _window.Load += OnLoad;
             _window.Update += OnUpdate;
             _window.Render += OnRender;
+            _window.Resize += OnResize;
         }
 
         public void Run() => _window.Run();
@@ -57,6 +59,8 @@ namespace AimTrainer.Core
             };
 
             _crosshair = new Crosshair(_glContext.GL, _shader);
+
+            OnResize(_window.Size);
         }
 
         private void OnUpdate(double delta)
@@ -76,6 +80,12 @@ namespace AimTrainer.Core
 
             _traingle.Draw();
             _crosshair.Draw();
+        }
+
+        private void OnResize(Vector2D<int> size)
+        {
+            _glContext.GL.Viewport(0, 0, (uint)size.X, (uint)size.Y);
+            _camera.AspectRatio = size.X / (float)size.Y;
         }
     }
 }
